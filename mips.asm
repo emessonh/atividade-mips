@@ -109,7 +109,58 @@ option1:
     j menu
 
 option2:
+    # Atribui para $a0 o valor da contante input_fibonnacci
+    la $a0, input_fibonnacci
+    # Atribui o valor da fun??o que ira imprimir uma string
+    li $v0, 4
+    # Imprime a mensagem em tela da contante input_fibonnacci
+    syscall
     
+    # Atribui para $v0 o valor 5 que corresponde a fun??o de ler um inteiro
+    li $v0, 5
+    # Ler o valor de um inteiro
+    syscall
+    move $t0, $v0  # Armazenar o valor digitado pelo usu?rio em $t0
+    
+    # Verificar se o valor digitado ? 0, se caso for, chama o bloco display_fibonacci
+    blez $t0, display_fibonacci
+    
+    # Atribui $t1 = 0
+    li $t1, 0
+    
+    # Atribui $t2 = 1
+    li $t2, 1
+    
+    # Loop para calcular os termos de Fibonacci
+    li $t3, 2   # Iniciar o contador em 2
+    loop_fibonacci:
+        add $t4, $t1, $t2   # F = F(n-1) + F(n-2)
+        move $t1, $t2       # F(n-1) = F(n-2)
+        move $t2, $t4       # F(n-2) = F
+        
+        addi $t3, $t3, 1    # Incrementar o contador
+        
+        # Verificar se alcan?ou o en?simo termo desejado
+        beq $t3, $t0, display_fibonacci
+        blt $t3, $t0, loop_fibonacci
+
+    display_fibonacci:
+    # Atribui o valor de $a0 a constante de result_fibonnacci
+    la $a0, result_fibonnacci
+    # Atribui o valor de $v0 = 4, correspondendo ao "print_string"
+    li $v0, 4
+    # Exibir o en?simo termo da sequ?ncia de Fibonacci
+    syscall
+    
+    move $a0, $t2   # Colocar o resultado em $a0 para exibi??o
+    # $vo = 1, que corresponde ao "print_int"
+    li $v0, 1
+    # Chama a fun??o de printar o valor inteiro 
+    syscall
+
+    # Chama o menu inicial
+    j menu
+
 
 option3:
 
