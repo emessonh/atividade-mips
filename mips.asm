@@ -163,7 +163,37 @@ option2:
 
 
 option3:
+    #  Atribui $a0 = o valor da constante input_enesimo
+    la $a0, input_enesimo
+    # Atribui $v0 = 4, que corresponde ao "print_string"
+    li $v0, 4
+    # Chama a funcão e exibe em tela o string que esta no input_fibonnacci
+    syscall
+    
+    # $v0 = 5 => ler o valor de um inteiro (read_int)
+    li $v0, 5
+    # Aguarda o usuairo digitar um valor inteiro
+    syscall
+    move $t0, $v0  # Armazenar o valor digitadod em $t0
 
+    # $t0 = $t0 x 2
+    mul $t0, $t0 , 2
+
+    # $a0 = result_enesimo
+    la $a0, result_enesimo
+    # Atribui o valor 4 a $v0 que  corresponde ao print_string
+    li $v0, 4
+    # Imprime em tela o valor que esta armazenado na constante result_enesimo
+    syscall
+    
+    move $a0, $t0 # Colocar o resultado em $a0 para exibilo
+    # imprime inteiro
+    li $v0, 1
+    # imprime numero inteiro que esta salvo no $v0
+    syscall
+    
+    # chama menu
+    j menu
 exit:
     # Terminar o programa
     li $v0, 10
